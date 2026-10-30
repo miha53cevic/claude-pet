@@ -1,0 +1,14 @@
+// Solution-style root config: compiles nothing itself, but tells editors
+// (VS Code's TS server discovers only files literally named tsconfig.json)
+// which real project each source file belongs to:
+//   tsconfig.main.json     — Electron main process (src/*.ts, ESM -> out/main)
+//   tsconfig.renderer.json — browser canvas code   (src/renderer/**, ESM -> out/renderer)
+//   tsconfig.tests.json    — tests + plain-JS scripts (noEmit, run natively)
+{
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.main.json" },
+    { "path": "./tsconfig.renderer.json" },
+    { "path": "./tsconfig.tests.json" }
+  ]
+}

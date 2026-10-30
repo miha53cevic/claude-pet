@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "module": "es2022",
+    "moduleResolution": "bundler",
+    "outDir": "out/renderer",
+    "rootDir": "src/renderer",
+    "lib": ["es2022", "dom"],
+    "types": []
+  },
+  "include": ["src/renderer/**/*.ts", "src/shared.d.ts"]
+}

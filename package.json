@@ -1,0 +1,25 @@
+{
+  "name": "claude-pet",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A desktop pet that mirrors your Claude Code sessions",
+  "main": "out/main/main.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.main.json && tsc -p tsconfig.renderer.json && mkdir -p out/renderer && cp src/renderer/index.html src/renderer/style.css out/renderer/",
+    "start": "npm run build && electron .",
+    "dev": "npm run build && CLAUDE_PET_DEBUG=1 electron .",
+    "install-hooks": "node scripts/install-hooks.js",
+    "uninstall-hooks": "node scripts/uninstall-hooks.js",
+    "emit": "node scripts/emit.js",
+    "typecheck": "tsc -p tsconfig.main.json --noEmit && tsc -p tsconfig.renderer.json --noEmit && tsc -p tsconfig.tests.json",
+    "test": "tsc -p tsconfig.tests.json && node --test test/*.test.ts",
+    "package": "npm run build && node scripts/package.js"
+  },
+  "devDependencies": {
+    "@electron/packager": "^20.3.0",
+    "@types/node": "^26.2.0",
+    "electron": "^43.4.0",
+    "typescript": "^7.0.2"
+  },
+  "type": "module"
+}

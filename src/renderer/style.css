@@ -1,0 +1,63 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  font: 12px/1.4 -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+#pet {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+
+#tooltip {
+  position: fixed;
+  top: 61vh; /* directly under the pet (ground line ~57vh) */
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 92vw;
+  background: rgba(30, 26, 24, 0.92);
+  color: #f5ece6;
+  border-radius: 10px;
+  padding: 7px 11px;
+  pointer-events: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#tooltip .row {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+}
+#tooltip .row em {
+  font-style: normal;
+  opacity: 0.75;
+}
+#tooltip .title {
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+#debug {
+  position: fixed;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(30, 26, 24, 0.8);
+  color: #9ff09f;
+  font-family: ui-monospace, monospace;
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+.hidden {
+  display: none;
+}
