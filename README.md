@@ -141,3 +141,7 @@ Install and uninstall both leave a timestamped backup next to
 
 Curious how it works, want to add your own pet form, or something isn't
 working? See **[TECHNICAL.md](TECHNICAL.md)**.
+
+## License
+
+[MIT](LICENSE)
