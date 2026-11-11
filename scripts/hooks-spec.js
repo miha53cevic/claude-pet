@@ -110,16 +110,24 @@ export function loadSettings(file, { missingOk = false } = {}) {
   }
 }
 
-// Serializes with the file's original trailing-newline style and writes
-// atomically (tmp file + rename).
+// Serializes with the file's original trailing-newline style.
+export function renderSettings(settings, raw) {
+  return JSON.stringify(settings, null, 2) + (raw.endsWith('\n') ? '\n' : '');
+}
+
+// Writes atomically (tmp file + rename).
 export function writeSettingsAtomic(file, settings, raw) {
-  const output = JSON.stringify(settings, null, 2) + (raw.endsWith('\n') ? '\n' : '');
   const tmp = file + '.claude-pet-tmp';
   fs.mkdirSync(path.dirname(file), { recursive: true });
-  fs.writeFileSync(tmp, output);
+  fs.writeFileSync(tmp, renderSettings(settings, raw));
   fs.renameSync(tmp, file);
 }
 
-export function renderSettings(settings, raw) {
-  return JSON.stringify(settings, null, 2) + (raw.endsWith('\n') ? '\n' : '');
+// Copies the file to a timestamped sibling; returns the backup path, or null
+// when there was nothing to back up.
+export function backupSettings(file) {
+  if (!fs.existsSync(file)) return null;
+  const backup = `${file}.claude-pet-backup-${new Date().toISOString().replace(/[:.]/g, '-')}`;
+  fs.copyFileSync(file, backup);
+  return backup;
 }

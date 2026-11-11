@@ -1,7 +1,7 @@
 // Render loop + interaction. Owns all timing/state; a form only draws a body.
 import { getForm } from './forms/index.js';
 import { CX, CY, LOGICAL, PET_RADIUS } from './layout.js';
-import { STATE_GLYPHS, BUBBLE_STATES } from './catalog.js';
+import { BUBBLE_GLYPHS } from './catalog.js';
 
 const DEFAULT_PALETTE: PetPalette = {
   body: '#d97757', // Claude coral
@@ -11,8 +11,6 @@ const DEFAULT_PALETTE: PetPalette = {
   confetti: ['#d97757', '#eda380', '#7fb069', '#e8b04b', '#6a8caf'],
 };
 const FAILED_PALETTE: Partial<PetPalette> = { body: '#c0504a', light: '#d97b70', belly: '#dba49a', dark: '#38201d' };
-
-const BUBBLE = Object.fromEntries(BUBBLE_STATES.map((s) => [s, STATE_GLYPHS[s]])) as Partial<Record<PetStateName, string>>;
 
 interface Particle {
   x: number;
@@ -445,7 +443,7 @@ function drawExtras(f: PetFrame, dt: number): void {
   }
 
   // bubble ('?' grows into '!?' when the wait has been ignored too long)
-  let ch = BUBBLE[f.state];
+  let ch = BUBBLE_GLYPHS[f.state];
   if (f.state === 'waiting' && resolved.urgency >= 2) ch = '!?';
   if (ch) {
     const pulse =

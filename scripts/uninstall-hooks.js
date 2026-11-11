@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Removes the pet's http hooks from ~/.claude/settings.json.
-//   node scripts/uninstall-hooks.js [--dry-run] [--settings X]
-import { resolvePort, removeHooks, parseCliArgs, loadSettings, writeSettingsAtomic, renderSettings } from './hooks-spec.js';
+//   node scripts/uninstall-hooks.js [--dry-run] [--settings X]   # backs up first, like install
+import { resolvePort, removeHooks, parseCliArgs, loadSettings, writeSettingsAtomic, renderSettings, backupSettings } from './hooks-spec.js';
 
 const { dryRun, file } = parseCliArgs(process.argv.slice(2));
 const port = resolvePort();
@@ -16,6 +16,7 @@ if (removed.length === 0) {
   console.log(`--dry-run: resulting ${file}:\n`);
   console.log(renderSettings(next, raw));
 } else {
+  console.log(`backed up ${file} -> ${backupSettings(file)}`);
   writeSettingsAtomic(file, next, raw);
   console.log(`removed hooks for: ${removed.join(', ')}`);
 }

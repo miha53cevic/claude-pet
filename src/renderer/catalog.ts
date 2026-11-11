@@ -4,15 +4,10 @@ export const FORM_NAMES = ['claude', 'clawd', 'blob', 'ghost'];
 
 export const STATE_NAMES: PetStateName[] = ['idle', 'working', 'waiting', 'done', 'failed', 'sleeping'];
 
-// One glyph per state: the tray title uses all of them; the speech bubble
-// shows only the BUBBLE_STATES subset.
-export const STATE_GLYPHS: Record<PetStateName, string> = {
-  idle: '○',
-  working: '●',
+// Speech-bubble glyph per state; states without one show no bubble.
+export const BUBBLE_GLYPHS: Partial<Record<PetStateName, string>> = {
   waiting: '?',
   done: '✓',
   failed: '!',
   sleeping: 'z',
 };
-
-export const BUBBLE_STATES: PetStateName[] = ['waiting', 'done', 'failed', 'sleeping'];

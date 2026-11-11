@@ -3,8 +3,7 @@
 //   node scripts/install-hooks.js --dry-run     # print what would change, write nothing
 //   node scripts/install-hooks.js               # backup, then write
 //   node scripts/install-hooks.js --settings X  # operate on a different file (tests)
-import * as fs from 'node:fs';
-import { resolvePort, mergeHooks, parseCliArgs, loadSettings, writeSettingsAtomic, renderSettings } from './hooks-spec.js';
+import { resolvePort, mergeHooks, parseCliArgs, loadSettings, writeSettingsAtomic, renderSettings, backupSettings } from './hooks-spec.js';
 
 const { dryRun, file } = parseCliArgs(process.argv.slice(2));
 const port = resolvePort();
@@ -19,11 +18,8 @@ if (added.length === 0) {
   console.log(`--dry-run: resulting ${file}:\n`);
   console.log(renderSettings(next, raw));
 } else {
-  if (fs.existsSync(file)) {
-    const backup = `${file}.claude-pet-backup-${new Date().toISOString().replace(/[:.]/g, '-')}`;
-    fs.copyFileSync(file, backup);
-    console.log(`backed up ${file} -> ${backup}`);
-  }
+  const backup = backupSettings(file);
+  if (backup) console.log(`backed up ${file} -> ${backup}`);
   writeSettingsAtomic(file, next, raw);
   console.log(`installed hooks for: ${added.join(', ')} (port ${port})`);
   console.log('run `npm run uninstall-hooks` to revert.');

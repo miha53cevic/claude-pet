@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Dev tool: POST synthetic hook payloads to the running pet.
-//   npm run emit -- waiting|working|done|failed|idle|sleeping|subagent|end
+//   npm run emit -- <scenario>   (run with no argument to list them)
 import * as http from 'node:http';
 import { resolvePort } from './hooks-spec.js';
 

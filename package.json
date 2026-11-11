@@ -17,9 +17,24 @@
   },
   "devDependencies": {
     "@electron/packager": "^20.3.0",
-    "@types/node": "^26.2.0",
-    "electron": "^43.4.0",
+    "@types/node": "^26.6.6",
+    "electron": "^43.8.8",
     "typescript": "^7.0.2"
   },
-  "type": "module"
+  "type": "module",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miha53cevic/claude-pet.git"
+  },
+  "homepage": "https://github.com/miha53cevic/claude-pet#readme",
+  "keywords": [
+    "claude-code",
+    "desktop-pet",
+    "electron",
+    "hooks",
+    "macos"
+  ]
 }

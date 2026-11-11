@@ -112,6 +112,17 @@ test('CLI: --dry-run writes nothing', () => {
   fs.rmSync(dir, { recursive: true, force: true });
 });
 
+test('CLI: uninstall backs up before writing', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'claude-pet-test-'));
+  const file = path.join(dir, 'settings.json');
+  fs.writeFileSync(file, JSON.stringify(mergeHooks({}, PORT).settings) + '\n');
+  run('uninstall-hooks.js', ['--settings', file]);
+  const backups = fs.readdirSync(dir).filter((f) => f.includes('claude-pet-backup'));
+  assert.equal(backups.length, 1);
+  assert.ok(fs.readFileSync(path.join(dir, backups[0]!), 'utf8').includes(hookUrl(PORT)));
+  fs.rmSync(dir, { recursive: true, force: true });
+});
+
 test('CLI: refuses to touch a file that does not parse', () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'claude-pet-test-'));
   const file = path.join(dir, 'settings.json');

@@ -21,6 +21,7 @@ interface HooksSpec {
   mergeHooks(settings: object, port: number): { settings: object; added: string[] };
   removeHooks(settings: object, port: number): { settings: object; removed: string[] };
   writeSettingsAtomic(file: string, settings: object, raw: string): void;
+  backupSettings(file: string): string | null;
 }
 
 let specPromise: Promise<HooksSpec> | null = null;
@@ -67,13 +68,6 @@ function readSettings(): { raw: string; settings: object } | null {
   }
 }
 
-function backup(): void {
-  const file = settingsFile();
-  if (fs.existsSync(file)) {
-    fs.copyFileSync(file, `${file}.claude-pet-backup-${new Date().toISOString().replace(/[:.]/g, '-')}`);
-  }
-}
-
 export async function installHooks(port: number): Promise<void> {
   const s = await spec();
   const loaded = readSettings();
@@ -102,8 +96,7 @@ export async function installHooks(port: number): Promise<void> {
   });
   if (response !== 0) return;
   try {
-    backup();
-    fs.mkdirSync(path.dirname(settingsFile()), { recursive: true });
+    s.backupSettings(settingsFile());
     s.writeSettingsAtomic(settingsFile(), next, loaded.raw);
     await dialog.showMessageBox({
       type: 'info',
@@ -134,7 +127,7 @@ export async function uninstallHooks(port: number): Promise<void> {
   });
   if (response !== 0) return;
   try {
-    backup();
+    s.backupSettings(settingsFile());
     s.writeSettingsAtomic(settingsFile(), next, loaded.raw);
     await dialog.showMessageBox({ type: 'info', message: 'Hooks removed', detail: `Removed: ${removed.join(', ')}.` });
   } catch (e) {

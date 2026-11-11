@@ -20,7 +20,6 @@ app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required');
 // single-instance lock (the lock is scoped to the userData directory).
 if (process.env.CLAUDE_PET_PORT) app.setPath('userData', `${app.getPath('userData')}-${PORT}`);
 
-
 // A 30Hz timer in the main process means an uncaught throw would open an
 // Electron error dialog per tick — an infinite popup storm. Cap it at one
 // dialog per run; later errors just log.

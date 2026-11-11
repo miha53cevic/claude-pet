@@ -28,3 +28,4 @@ export function parseCliArgs(argv: string[]): { dryRun: boolean; file: string };
 export function loadSettings(file: string, opts?: { missingOk?: boolean }): { raw: string; settings: ClaudeSettings };
 export function writeSettingsAtomic(file: string, settings: ClaudeSettings, raw: string): void;
 export function renderSettings(settings: ClaudeSettings, raw: string): string;
+export function backupSettings(file: string): string | null;
